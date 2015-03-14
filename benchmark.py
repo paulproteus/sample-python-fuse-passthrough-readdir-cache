@@ -32,7 +32,10 @@ def do_work_once():
     BASE = '/mnt/party/2.1.0/gems'
     for dir in os.listdir(BASE):
         # Do a stat(), via os.path.exists().
-        os.path.exists(os.path.join(BASE, dir) + 'lib/nonexist.rb')
+        try:
+            os.lstat(os.path.join(BASE, dir) + 'lib/nonexist.rb')
+        except OSError:
+            pass
 
 def post_benchmark_unmount():
     os.system("fusermount -u /mnt/party")
